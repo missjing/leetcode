@@ -2,7 +2,8 @@ problem:
 Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.
 
 solution:
-//一、要弄清string里包含的字符范围，如果只有'a'~'z'，则只需26大小的size；如果是ASCII，则包含256个size，类似与用hash来记录出现的字符
+//一、要弄清string里包含的字符范围，如果只有'a'~'z'，则只需26大小的size；如果是ASCII，则包含256个size，
+//类似于用hash来记录出现的字符的思想
 //二、substring表明是要求的连续子串
 //三、遇到重复字符的时候，记录目前为止最长子串长度，并把之前的记录下的字符清除
 //四、循环结束后一定要记得更新maxlen
