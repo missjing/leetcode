@@ -1,0 +1,42 @@
+problem：
+Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+
+solution：
+reference：http://leetcode.com/2011/11/longest-palindromic-substring-part-i.html
+
+//动态规划来解的，时间复杂度O(n2), 空间复杂度O(n2)
+//注意字符串为空和字符串长度为1时的特殊处理
+//动态规划的重点的弄明白初始状态和状态转移方程
+string longestPalindrome(string s) 
+{
+  if(s == "")
+		return "";
+	else if(s.length() == 1)
+		return s;
+	bool isPalindrome[1000][1000] = {false};
+	int longestBegin = 0;
+	int maxLen = 0;
+	for(int i = 0; i < s.length(); i++)
+	{
+		isPalindrome[i][i] = true;
+		if(i < s.length() - 1 && s[i] == s[i+1])
+		{
+			isPalindrome[i][i+1] = true;
+			longestBegin = i;
+			maxLen = 2;
+		}
+	}
+	for(int len = 3; len <= s.length(); len++)
+		for(int i = 0; i < s.length() - len + 1; i++)
+		{
+			int j = i + len - 1;
+			if(s[i] == s[j] && isPalindrome[i+1][j-1])
+			{
+				isPalindrome[i][j] = true;
+				longestBegin = i;
+				maxLen = len;
+			}
+		}
+
+	return s.substr(longestBegin, maxLen);
+}
