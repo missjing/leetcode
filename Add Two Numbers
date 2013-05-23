@@ -14,11 +14,16 @@ struct ListNode
 //一、注意为NULL时候的处理，这里使用了lRemain省去了很多重复过程
 //二、注意到最后还有进位的时候，需要再新建一个节点存进位值
 //三、这里用到指针的指针。往空链表中插入结点时，新插入的结点就是链表的头指针，由于此时会改动头指针，因此必须把头结点设为指向指针的指针
+//关于指针的指针：作为指针，把其指向的结点加入到相应的子链表中。例如：
+//ListNode **head = NULL;  定义一个指针的指针为头结点
+//*head = new ListNode(0); 将新结点new ListNode(0)加入到以head为头结点的子链表中
+//head = &((*head)->next); 更新head结点为新节点的next位置
+
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
 {
 	int carry = 0;
 	ListNode* ret = NULL; //记录返回新链表的头节点
-	ListNode** pNode = &ret; //指针的指针，绑定头结点，相当于链表头结点，每次更新向新链表中插入结点
+	ListNode** pNode = &ret; //指针的指针，每次更新向链表中插入新结点
 	while(l1&&l2)
 	{
 		int s = carry + l1->val + l2->val;
