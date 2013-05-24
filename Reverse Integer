@@ -1,0 +1,35 @@
+problem：
+Reverse digits of an integer.
+
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+
+------------------------------------
+solution：
+//要注意负数的处理
+int reverse(int x) 
+{
+  if(x == 0)
+		return x;
+	char c;  //符号
+	string s;
+	if(x < 0)
+	{
+		c = '-';
+		x = -x;
+	}
+	while(x)
+	{
+		char t = '0' +  x % 10;
+		s.append(1, t);
+		x = x / 10;
+	}
+	int result = 0;
+	for(int i = 0; i < s.length(); i++)
+	{
+		result += (s[i] - '0') * pow(10, s.length() - i - 1);
+	}
+	if(c == '-')
+		result = -result;
+	return result;
+}
