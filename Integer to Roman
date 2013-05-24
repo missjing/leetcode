@@ -1,0 +1,58 @@
+problem：
+Given an integer, convert it to a roman numeral.
+
+Input is guaranteed to be within the range from 1 to 3999.
+---------------------------------------------------------
+
+solution：
+这题的关键在于roman numeral的理解，基本元素组成有：
+//'I' 1
+//'V' 5
+//'X' 10
+//'L' 50
+//'C' 100
+//'D' 500
+//'M' 1000
+但还有一个习惯就是，比如IIII表示成IV，所以其实可以组成以下这些情况：
+//"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"
+//1000,900,500,400,100,90,50,40,10,9,5,4,1
+
+void appendSymbol(string& res, int cot, char symbol[])
+{
+  if(cot == 0)
+		return;
+	else if(cot <= 3)
+		res.append(cot, symbol[0]);
+	else if(cot == 4)
+	{
+		res.append(1, symbol[0]);
+		res.append(1, symbol[1]);
+	}
+	else if(cot <= 8)
+	{
+		res.append(1, symbol[1]);
+		res.append(cot - 5, symbol[0]);
+	}
+	else //cot == 9
+	{
+		res.append(1, symbol[0]);
+		res.append(1, symbol[2]);
+	}
+}
+
+string intToRoman(int num)
+{
+  if(num <= 0)
+		return NULL;
+	char symbol[] = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+	string result;
+	int scale = 1000;
+	for(int i = 6; i >=0; i -= 2)
+	{
+		int n = num / scale;
+		appendSymbol(result, n, symbol + i);
+		num = num % scale;
+		scale /= 10;
+	}
+	return result;
+}
