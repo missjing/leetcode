@@ -1,0 +1,68 @@
+problem：
+Implement atoi to convert a string to an integer.
+
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+
+-------------------------------------------------------
+solution：
+//这个题目的难点在于输入的合法性判断：空格，'+', '-', 整型溢出，数值有效'0'~'9'之间
+bool isValid = true;
+int atoi(const char *str)
+{
+  if(str == NULL || *str == '\0')
+	{
+		isValid = false;
+		return 0;
+	}
+	long long result;
+	if(str != NULL && *str != '\0')
+	{
+		bool isNegative = false;
+		while(*str == ' ')
+			str++;
+		if(*str == '+')
+			str++;
+		else if(*str == '-')
+		{
+			str++;
+			isNegative = true;
+		}
+		if(*str != '\0')
+			result = StrToInt(str, isNegative);
+	}
+	
+	return (int)result;
+}
+
+long long StrToInt(const char* s, bool isNegative)
+{
+	long long result = 0;
+	while(*s != '\0')
+	{
+		if(*s >= '0' && *s <= '9')
+		{
+			int flag = isNegative ? -1 : 1;
+			result = result * 10 + flag * (*s - '0');
+			if(isNegative && result < (signed int)0x80000000)
+			{
+				result = (signed int)0x80000000;
+				break;
+			}
+			else if(!isNegative && result > 0x7FFFFFFF)
+			{
+				result = 0x7FFFFFFF;
+				break;
+			}
+			s++;
+		}
+		else
+		{
+			break;
+		}			
+	}
+	if(*s != '\0')
+		isValid = false;
+	return result;
+}
