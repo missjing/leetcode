@@ -1,0 +1,55 @@
+problem：
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ? b ? c)
+The solution set must not contain duplicate triplets.
+    For example, given array S = {-1 0 1 2 -1 -4},
+
+    A solution set is:
+    (-1, 0, 1)
+    (-1, -1, 2)
+--------------------------------------------------------------------------------------
+solution：
+//思路，两重循环取出a, b，再用二分查找找出满足条件a + b + c = 0的c。因为要用二分，所以刚开始需要排序
+//需要注意结果的去重。用到vector的unique和erase函数。
+vector<vector<int> > threeSum(vector<int> &num) 
+{
+  vector<vector<int>> ret;
+	if(num.size() < 3)
+		return ret;
+	sort(num.begin(), num.end());
+	vector<int> tmp;
+	for(int i = 0; i < num.size() - 2; i++)
+	{
+		int a = num[i];
+		for(int j = i + 1; j < num.size() - 1; j++)
+		{
+			int b = num[j];
+			int target = -a - b;
+			int l = j + 1;
+			int r = num.size() - 1;
+			while(l <= r)
+			{
+				int mid = (l +r) / 2;
+				if(num[mid] == target)
+				{
+					tmp.clear();
+					tmp.push_back(a);
+					tmp.push_back(b);
+					tmp.push_back(target);
+					ret.push_back(tmp);
+					break;
+				}
+				else if(num[mid] > target)
+					r = mid - 1;
+				else
+					l = mid + 1;
+			}
+		}
+	}
+	sort(ret.begin(), ret.end());
+	ret.erase(unique(ret.begin(), ret.end()), ret.end());
+	return ret;
+}
