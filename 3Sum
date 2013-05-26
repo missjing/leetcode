@@ -14,6 +14,11 @@ The solution set must not contain duplicate triplets.
 solution：
 //思路，两重循环取出a, b，再用二分查找找出满足条件a + b + c = 0的c。因为要用二分，所以刚开始需要排序
 //需要注意结果的去重。用到vector的unique和erase函数。
+//unique函数只能检测相邻的重复元素，因此要使unique奏效，需要先对vector里的元素排序；此外unique函数并不是把重复元素之间删除
+//而是把重复元素放到容器的后面，而它本身返回一个迭代器，指向重复元素的开始部分，因此要真正删除需要配合erase函数使用。
+//sort(n.begin(), n.end());
+//n.erase(unique(n.begin(), n.end()), n.end());
+
 vector<vector<int> > threeSum(vector<int> &num) 
 {
   vector<vector<int>> ret;
