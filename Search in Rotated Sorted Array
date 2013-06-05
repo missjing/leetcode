@@ -1,0 +1,39 @@
+problem：
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+
+You may assume no duplicate exists in the array.
+-------------------------------------------------------
+solution：
+//运用二分搜索的思想，关键是要把情况分对。将数组分为A、B两部分：A有序，target在A中或在B中；B有序，target在B中或在A中，共4种情况
+int search(int A[], int n, int target)
+{
+  if(n <= 0)
+		return -1;
+	int l = 0;
+	int r = n-1;
+	while(l <= r)
+	{
+		int mid = (l + r) / 2;
+		if(A[mid] == target)
+			return mid;
+		else if(A[mid] > A[r])  //左部分有序
+		{
+			if(A[l] <= target && target < A[mid])  //target在左部分
+				r = mid - 1;
+			else
+				l = mid + 1;
+		}
+		else  //右部分有序
+		{
+			if(A[r] >= target && target > A[mid])
+				l = mid + 1;
+			else
+				r = mid - 1;
+		}
+	}
+	return -1;
+}
