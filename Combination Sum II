@@ -1,0 +1,65 @@
+problem：
+Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+Each number in C may only be used once in the combination.
+
+Note:
+
+All numbers (including target) will be positive integers.
+Elements in a combination (a1, a2, � , ak) must be in non-descending order. (ie, a1 ? a2 ? � ? ak).
+The solution set must not contain duplicate combinations.
+For example, given candidate set 10,1,2,7,6,1,5 and target 8, 
+A solution set is: 
+[1, 7] 
+[1, 2, 5] 
+[2, 6] 
+[1, 1, 6] 
+----------------------------------------------------------------------------------------------------------
+solution：
+//candidate numbers中包含重复的元素，因此要使求出来的解集合没有重复的，需要统计某个元素出现最大次数
+//排序后dfs
+void combinationSum_sub(int index, int target, int *times, vector<int> &num, vector<vector<int> > &ret)
+{
+  if(target < 0)
+		return;
+	if(index == num.size())
+	{
+		if(target != 0)
+			return;
+	}
+	if(target == 0)
+	{
+		vector<int> r;
+		for(int i = 0; i < index; i++)
+			for(int j = 1; j <= times[i]; j++)
+				r.push_back(num[i]);
+		ret.push_back(r);
+		return;
+	}
+	int maxTimes = 0;
+	int indexV = index;
+	while(indexV < num.size()  && num[indexV] == num[index])
+	{
+		maxTimes++;
+		indexV++;
+	}
+	for(int i = 0; i <= maxTimes; i++)
+	{
+		times[index] = i;
+		combinationSum_sub(indexV, target - num[index] * i, times, num, ret);
+	}
+
+}
+
+vector<vector<int> > combinationSum2(vector<int> &num, int target)
+{
+	vector<vector<int> > ret;
+	if(num.size() == 0 || target <= 0)
+		return ret;
+	int *times = new int[num.size()];
+	for(int i = 0; i < num.size(); i++)
+		times[i] = 0;
+	sort(num.begin(), num.end());
+	combinationSum_sub(0, target, times, num, ret);
+	return ret;
+}
