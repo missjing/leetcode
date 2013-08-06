@@ -1,0 +1,49 @@
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+//两个栈(curLevel, nextLevel)来模拟，并用一个变量记录是l-to-r或r-to-l
+vector<vector<int> > zigzagLevelOrder(TreeNode *root)
+{
+	vector<vector<int> > ret;
+	if(root == NULL)
+		return ret;
+	stack<TreeNode*> curLevel, nextLevel;
+	bool isLToR = true;
+	curLevel.push(root);
+	vector<int> tmp;
+	while(!curLevel.empty())
+	{
+		TreeNode *curNode = curLevel.top();
+		curLevel.pop();
+		if(curNode)
+		{
+			tmp.push_back(curNode->val);
+			if(isLToR)
+			{
+				if(curNode->left)
+					nextLevel.push(curNode->left);
+				if(curNode->right)
+					nextLevel.push(curNode->right);
+			}
+			else
+			{
+				if(curNode->right)
+					nextLevel.push(curNode->right);
+				if(curNode->left)
+					nextLevel.push(curNode->left);
+			}
+		}
+		if(curLevel.empty())
+		{
+			ret.push_back(tmp);
+			tmp.clear();
+			isLToR = !isLToR;
+			swap(curLevel, nextLevel);
+		}
+	}
+	return ret;
+}
