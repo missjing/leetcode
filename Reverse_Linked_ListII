@@ -1,0 +1,24 @@
+struct ListNode {
+  int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode *reverseBetween(ListNode *head, int m, int n)
+{
+	if(head == NULL)
+		return NULL;
+	ListNode **pNode = &head;
+	for(int i = 1; i < m; ++i)
+		pNode = &((*pNode)->next);
+	ListNode *subTail = *pNode;
+	for(int i = m + 1; i <= n; ++i)
+	{
+		ListNode *pCur = subTail->next;
+		subTail->next = pCur->next;
+		pCur->next = *pNode;
+		*pNode = pCur;
+	}
+	pNode = &(subTail->next);
+	return head;
+}
