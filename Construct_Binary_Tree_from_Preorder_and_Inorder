@@ -1,0 +1,25 @@
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+TreeNode *buildTree_aux(vector<int> &preorder, int preBegin, int preEnd, vector<int> &inorder, int inBegin, int inEnd)
+{
+	if(preEnd - preBegin != inEnd - inBegin || preEnd < preBegin)
+		return NULL;
+	TreeNode* root = new TreeNode(preorder[preBegin]);
+	int i = inBegin;
+	while(i < inorder.size() && inorder[i] != preorder[preBegin])
+		i++;
+	int len_left = i - inBegin;
+	root->left = buildTree_aux(preorder, preBegin+1, preBegin + len_left, inorder, inBegin, i-1);
+	root->right = buildTree_aux(preorder, preBegin + len_left + 1, preEnd, inorder, i + 1, inEnd);
+	return root;
+}
+
+TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder)
+{
+	return buildTree_aux(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
+}
