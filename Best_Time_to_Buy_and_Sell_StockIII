@@ -1,0 +1,31 @@
+//限制只有两次交易，不过交易不重叠
+//设i从0~n-1，针对每个i，对子序列[0..i],[i..n-1]上分别求最大利润
+int maxProfit(vector<int> &prices)
+{
+  if(prices.size() == 0)
+		return 0;
+	vector<int> f1(prices.size());
+	vector<int> f2(prices.size());
+
+	int minV = prices[0];
+	f1[0] = 0;
+	for(int i = 1; i < prices.size(); ++i)
+	{
+		minV = min(minV, prices[i]);
+		f1[i] = max(f1[i - 1], prices[i] - minV);
+	}
+
+	int maxV = prices[prices.size() - 1];
+	f2[f2.size() - 1] = 0;
+	for(int i = prices.size() - 2; i >= 0; --i)
+	{
+		maxV = max(maxV, prices[i]);
+		f2[i] = max(f2[i + 1], maxV - prices[i]);
+	}
+
+	int sum = 0;
+	for(int i = 0; i < prices.size(); ++i)
+		sum = max(sum, f1[i] + f2[i]);
+	
+	return sum;
+}
