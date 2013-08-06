@@ -1,0 +1,31 @@
+// Definition for binary tree
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+void pathSum_aux(TreeNode *root, int sum, vector<vector<int> > &ret, vector<int> &tmp)
+{
+	if(root == NULL)
+		return;
+	tmp.push_back(root->val);
+	int leftsum = sum - root->val;
+	if(leftsum == 0 && root->left == NULL && root->right == NULL)
+	{
+		ret.push_back(tmp);
+	}
+	pathSum_aux(root->left, leftsum, ret, tmp);
+	pathSum_aux(root->right, leftsum, ret, tmp);
+	tmp.pop_back();
+}
+vector<vector<int> > pathSum(TreeNode *root, int sum)
+{
+	vector<vector<int> > ret;
+	if(root == NULL)
+		return ret;
+	vector<int> tmp;
+	pathSum_aux(root, sum, ret, tmp);
+	return ret;
+}
