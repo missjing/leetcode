@@ -1,0 +1,47 @@
+//Definition for binary tree
+struct TreeNode {
+      int val;
+	    TreeNode *left;
+        TreeNode *right;
+	    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ };
+
+int TreeDepth(TreeNode* root)
+{
+	if(root == NULL)
+		return 0;
+	int left = TreeDepth(root->left);
+	int right = TreeDepth(root->right);
+	if(left > right)
+		return left + 1;
+	else
+		return right + 1;
+}
+
+//如果直接对每个结点求depth再比较深度差，会有很多重复计算；
+//所以考虑采用后序遍历，每次当求根节点深度时可以查询记录下来的左右子结点的深度来得到
+bool isBalanced_aux(TreeNode *root, int *depth)
+{
+	if(root == NULL)
+	{
+		*depth = 0;
+		return true;
+	}
+	int left, right;
+	if(isBalanced_aux(root->left, &left) && isBalanced_aux(root->right, &right))
+	{
+		int diff = left - right;
+		if(diff <= 1 && diff >= -1)
+		{
+			*depth = 1 + (left > right ? left : right);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool isBalanced(TreeNode *root)
+{
+	int depth = 0;
+	isBalanced_aux(root, &depth);
+}
