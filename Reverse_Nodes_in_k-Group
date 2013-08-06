@@ -1,0 +1,37 @@
+
+  struct ListNode {
+      int val;
+      ListNode *next;
+      ListNode(int x) : val(x), next(NULL) {}
+ };
+ 
+
+
+
+ListNode *reverseKGroup(ListNode *head, int k)
+{
+  if(k < 2)
+		return head;
+	ListNode **pNode = &head;
+	while(*pNode)
+	{
+		ListNode *pEnd = *pNode;
+		for(int i = 1; pEnd && i < k; ++i)
+			pEnd = pEnd->next;
+		if(pEnd)  //翻转
+		{
+			ListNode *subTail = *pNode; //刚开始的头结点一步步形成翻转序列的尾结点
+			for(int j = 1; j < k; ++j)
+			{
+				ListNode *pCur = subTail->next;  //每次待翻转结点都是subHead的next结点
+				subTail->next = pCur->next;
+				pCur->next = *pNode;
+				*pNode = pCur;    //pNode每次更新为翻转序列的当前头结点
+			}
+			pNode = &(subTail->next);
+		}
+		else
+			break;  //不足k个，保持链表结点不变
+	}
+	return head;
+}
