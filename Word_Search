@@ -1,0 +1,31 @@
+//常用的深搜题
+bool exist_aux(vector<vector<char> > &board, int i, int j, string word, int idx)
+{
+  if(idx == word.size())
+		return true;
+	if(i >= 0 && i < board.size() && j >= 0 && j < board[i].size() && board[i][j] == word[idx])
+	{
+		board[i][j] = '#'; //由于题目要求每个字符只能被使用一次，因此需要做这个记号防止被重复使用
+		++idx;
+		return exist_aux(board, i + 1, j, word, idx)
+			| exist_aux(board, i - 1, j, word, idx)
+			| exist_aux(board, i, j + 1, word, idx)
+			| exist_aux(board, i, j - 1, word, idx);
+	}
+	return false;
+}
+
+bool exist(vector<vector<char> > &board, string word)
+{
+	for(int i = 0; i < board.size(); ++i)
+		for(int j = 0; j < board[i].size(); ++j)
+		{
+			if(board[i][j] == word[0])
+			{
+				vector<vector<char> > tmp(board);
+				bool ret = exist_aux(tmp, i, j, word, 0);
+				if(ret == true)
+					return true; //找到word时直接return，否则一直继续搜索
+			}
+		}
+}
