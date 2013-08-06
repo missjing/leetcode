@@ -1,0 +1,20 @@
+//numTrees(i+1)=append the last node to the rightmost leaf of bst(i)[numTrees(i)] +
+//append the last node as the root of bst(i)[numTrees(i)] +
+//insert the last node as non-leaf node sum(k=1...i)(bst(k-1)*bst(i-k)
+//卡特兰数（括号化、出栈次数、凸多边形三角划分、给定结点组成二叉树）
+
+int numTrees(int n) {
+  if(n == 0 || n == 1 || n == 2)
+		return n;
+	int bst[] = new int[n+1];
+	bst[0] = 1;
+	bst[1] = 1;
+	bst[2] = 2;
+	for (int i=3; i<=n; i++) {
+		for (int j=1; j<i-1; j++) {
+			bst[i] += bst[j]*bst[i-1-j];
+		}
+		bst[i] += 2*bst[i-1];
+	}
+	return bst[n];
+}
