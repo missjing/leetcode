@@ -1,0 +1,44 @@
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+
+vector<vector<int> > levelOrder(TreeNode *root)
+{
+	vector<vector<int> > ret;
+	if(root == NULL)
+		return ret;
+	queue<TreeNode*> q;
+	q.push(root);
+	vector<int> tmp(0);	
+	int count = 1;
+	int level = 0;
+	while(!q.empty())
+	{
+		tmp.clear();
+		level = 0;
+		for(int i = 0; i < count; ++i)
+		{
+			root = q.front();
+			q.pop();
+			tmp.push_back(root->val);
+			if(root->left != NULL)
+			{
+				q.push(root->left);
+				level++;
+			}
+			if(root->right != NULL)
+			{
+				q.push(root->right);
+				level++;
+			}
+		}
+		ret.push_back(tmp);
+		count = level;
+	}
+	reverse(ret.begin(), ret.end());
+	return ret;
+}
