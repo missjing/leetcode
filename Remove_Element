@@ -1,0 +1,13 @@
+
+int removeElement(int A[], int n, int elem)
+{
+  if(n == 0)
+		return n;
+	int len = 0;
+	for(int i = 0; i < n; i++)
+	{
+		if(A[i] != elem)
+			A[len++] = A[i];
+	}
+	return len;
+}
