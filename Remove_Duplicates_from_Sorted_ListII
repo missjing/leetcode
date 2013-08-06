@@ -1,0 +1,31 @@
+#include <iostream>
+
+struct ListNode {
+  int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+//因为要涉及到删除头结点，所以需要使用二级指针
+ListNode *deleteDuplicates(ListNode *head)
+{
+	ListNode *root = NULL;
+	ListNode **ppNext = &root;
+	while(head)
+	{
+		if(head->next == NULL || head->next->val != head->val)
+		{
+			*ppNext = head;
+			ppNext = &(head->next);
+			head = head->next;
+		}
+		else
+		{
+			int val = head->val;
+			while(head != NULL && head->val == val)
+				head = head->next;
+		}	
+	}
+	*ppNext = NULL;
+	return root;
+}
