@@ -1,0 +1,22 @@
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+//对每个结点，判断其值是否在左右界中，并实时更新界，
+//比如遍历到根节点的左孩子结点，它的上界是根节点的值；遍历到根节点的右孩子结点，它的下界是根节点的值
+bool isValidBST_aux(TreeNode *node, int leftVal, int rightVal)
+{
+	if(node == NULL)
+		return true;
+	return leftVal < node->val && rightVal > node->val &&
+		isValidBST_aux(node->left, leftVal, node->val) &&
+		isValidBST_aux(node->right, node->val, rightVal);
+}
+
+ bool isValidBST(TreeNode *root)
+ {
+	return isValidBST_aux(root, INT_MIN, INT_MAX);
+ }
