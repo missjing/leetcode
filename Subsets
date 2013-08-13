@@ -30,4 +30,5 @@ vector<vector<int> > subsets(vector<int> &S)
 	}
 	for(int i = 0; i <= n; ++i)
 		subsets_aux(ret, tmp, S, n, i, 0);
+	return ret;
 }
