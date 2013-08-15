@@ -7,6 +7,20 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 
 -------------------------------------------------------
 solution：
+先回忆一下atoi函数和itoa函数
+--atoi函数
+头文件：stdlib.h
+原型：int atoi (const char * str);
+功能：将C风格的字符串数组转化为整型数
+说明：这个函数会检测数组开始部分的空字符直到找到第一个非空字符，然后从这个字符检测是'+'或'-'，最后把剩余字符部分转化为整型值。
+并且字符串数组的数值部分后面是可以包含其他字符的，这些其他字符会被atoi函数忽略掉。最后，如果输入不符合要求，返回0.
+
+--itoa函数（非C语言标准函数，因此只被部分编译器支持）
+原型：char *  itoa ( int value, char * str, int base );
+功能:在给定进制base下，将整型数value转化为以空字符结尾的字符串并存到str中
+说明：在十进制下，如果value值为负，则结果str中会有负号'-'；而在其他进制下，value只被当作unsigned类型处理。str数组长度应该够容纳转换得到的字符串
+
+
 //这个题目的难点在于输入的合法性判断：空格，'+', '-', 整型溢出，数值有效'0'~'9'之间
 bool isValid = true;
 int atoi(const char *str)
