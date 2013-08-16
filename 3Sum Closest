@@ -6,9 +6,12 @@ Given an array S of n integers, find three integers in S such that the sum is cl
     The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 --------------------------------------------------------------------
 solution：
-//延续3sum思想的话，排序后先两重循环定a 和b，再二分将target-a-b插入到恰当的位置
-//思路二、第一个数按照原来的从前往后走，后面两个数一前一后相向而行，最差的情况
-//只是走完剩下的那一段一遍，所以整体来说时间复杂度是O(n2)
+思路一、延续3sum思想的话，排序后先两重循环定a 和b，再二分将target-a-b插入到恰当的位置
+
+思路二、第一个数按照原来的从前往后走，后面两个数一前一后相向而行，最差的情况
+只是走完剩下的那一段一遍，所以整体来说时间复杂度是O(n2)
+
+////////////////////////////////////////////////
 int threeSumClosest(vector<int> &num, int target)
 {
   	if(num.size() < 3)
@@ -21,7 +24,7 @@ int threeSumClosest(vector<int> &num, int target)
 			int l = i + 1;
 			int r = num.size() - 1;
 			int a = num[i];
-			while(l <= r)
+			while(l < r)   //这里不能等于，因为每个元素只能取一次
 			{
 				int sum = a + num[l] + num[r];
 				if(abs(sum - target) < mindif)
