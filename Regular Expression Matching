@@ -22,6 +22,7 @@ isMatch("aab", "c*a*b") ? true
 
 solution：
 //正则表达式的匹配问题，动态规划的思想用递归实现
+//因为'*'号的连续性，所以每次考虑p+1是否是'*'来将问题逐步缩小。
 bool isMatch(const char *s, const char *p)
 {
   if(*p == '\0')
@@ -34,7 +35,7 @@ bool isMatch(const char *s, const char *p)
 	}
 	else
 	{
-		while(*p == *s || ((*p) == '.' && (*s) != '\0'))  
+		while(*p == *s || ((*p) == '.' && (*s) != '\0'))  //分别遍历"*"代表1个到若干个字符时是否match
 		{  
 			if(isMatch(s, p + 2))  
 			{  
@@ -42,6 +43,6 @@ bool isMatch(const char *s, const char *p)
 			}  
 			s++;  
 		}  
-		return isMatch(s, p + 2);  
+		return isMatch(s, p + 2);   // "*"代表0个字符时是否match
 	}
 }
