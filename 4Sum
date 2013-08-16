@@ -25,13 +25,10 @@ vector<vector<int> > fourSum(vector<int> &num, int target)
 	{
 		if(i > 0 && num[i] == num[i - 1])
 			continue;
-		//int a = num[i];
 		for(int j = i + 1; j < num.size() - 2; j++)
 		{
 			if(j > i+1 && num[j] == num[j-1])
 				continue;
-			//int b = num[j];
-			//int l = j + 1;
 			int r = num.size() - 1;
 			for(int l = j + 1; l < r; l++)
 			{
