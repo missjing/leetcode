@@ -29,7 +29,7 @@ string countAndSay(int n)
 				countC++;
 			else
 			{
-				t.append(1, countC + '0');
+				t.append(1, countC + '0'); //这里可以写countC + '0'是因为此题中countC < 10
 				t.append(1, c);
 				c = s[j];
 				countC = 1;
