@@ -15,6 +15,7 @@ void generator(vector<string> & ret, string s, int l, int r, int n)
 	{
 		s.append(n - r, ')');
 		ret.push_back(s);
+		return;
 	}
 	generator(ret, s + '(', l + 1, r, n);
 	if(l > r)
