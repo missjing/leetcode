@@ -14,8 +14,9 @@ A solution set is:
 [2, 2, 3] 
 ------------------------------------------------------------------------------------------------------
 solution：
-//一、如果candidate numbers中含有重复的元素，需要去重先，不过这题说明是set，应该就是指没有重复元素
-//先排序，再用递归实现dfs
+//如果candidate numbers中含有重复的元素，需要去重先，不过这题说明是set，应该就是指没有重复元素
+//因为要求结果组合是有序的，所以集合需先排序，再用递归实现dfs
+//每个元素可以被取任意次，因此记录元素的个数也是必要的
 void combinationSum_sub(int index, int target, vector<int> &candidates, int *times, vector<vector<int> > &ret)
 {
   if(target < 0)
