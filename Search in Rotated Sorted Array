@@ -9,6 +9,7 @@ You may assume no duplicate exists in the array.
 -------------------------------------------------------
 solution：
 //运用二分搜索的思想，关键是要把情况分对。将数组分为A、B两部分：A有序，target在A中或在B中；B有序，target在B中或在A中，共4种情况
+//题目中给出条件“数组中无重复元素”，因而二分比较是有效的。
 int search(int A[], int n, int target)
 {
   if(n <= 0)
