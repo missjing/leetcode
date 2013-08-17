@@ -15,7 +15,7 @@ solution:
 
 vector<int> findSubstring(string S, vector<string> &L) 
 {
-  map<string, int> word;
+  	map<string, int> word; //放L中所有的字符串，此题的特点是这些字符串等长
 	map<string, int> curStr;
 	vector<int> ret;
 	int N = L.size();
