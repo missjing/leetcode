@@ -11,27 +11,20 @@ Given array A = [2,3,1,1,4]
 The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 -----------------------------------------------------------------------------------------------------------
 solution:
-//用贪心算法，每次取当前位置能跳得最远的下一个位置
+//last用来记录通过step步能跳到最远的位置，curr记录通过step+1步能跳到的最远位置
 int jump(int A[], int n)
 {
-  if(n == 1)
-		return 0;
-	int low = 0;
-	int high = 0;
-	int minStep = 0;
-	while(low <= high)
+	int step = 0;
+	int last = 0;
+	int curr = 0;
+	for(int i = 0; i < n; ++i)
 	{
-		minStep++;
-		int tmpHigh = high;
-		for(int i = low; i <= tmpHigh; i++)
+		if(i > last)
 		{
-			int possDist = i + A[i];
-			if(possDist >= n - 1)
-				return minStep;
-			if(possDist > high)
-				high = possDist;
+			last = curr;
+			++step;
 		}
-		low = tmpHigh + 1;
+		curr = max(curr, i + A[i]);
 	}
-	return 0;
+	return step;
 }
