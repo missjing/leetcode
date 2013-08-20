@@ -10,5 +10,8 @@ Leetcode
  
  All of the code have passed the test.
  Hope we can make progress together!
+ 
+ tip：Please download package, and use nodepad++(http://notepad-plus-plus.org/download/v6.4.5.html) to open them after decompression.
+
 
  
