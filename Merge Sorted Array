@@ -1,0 +1,27 @@
+problem：
+Given two sorted integer arrays A and B, merge B into A as one sorted array.
+
+Note:
+You may assume that A has enough space to hold additional elements from B. The number of elements initialized in A and B are m and n respectively.
+
+------------------------------------------------------------------------------------------
+
+solution：
+从大到小进行处理
+/////////////
+void merge(int A[], int m, int B[], int n) 
+{
+	int curi = m + n - 1;
+	int ia = m - 1;
+	int ib = n - 1;
+	while(ia >= 0 && ib >= 0) {
+		if(A[ia] >= B[ib]) {
+			A[curi--] = A[ia--];
+		} else {
+			A[curi--] = B[ib--];
+		}
+	}
+	while (ib >= 0) {
+		A[curi--] = B[ib--];
+	}
+}

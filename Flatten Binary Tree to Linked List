@@ -1,0 +1,53 @@
+problem:
+Given a binary tree, flatten it to a linked list in-place.
+
+For example,
+Given
+
+         1
+        / \
+       2   5
+      / \   \
+     3   4   6
+The flattened tree should look like:
+   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+
+-----------------------------------------------------
+
+solution:
+/////////////////////////////////////////////
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+//对每一个结点，将其左孩子放到右枝上，左孩子置为NULL，之前的右孩子放在新的右枝的最深最右结点上
+void flatten(TreeNode *root)
+{
+	if(root == NULL)
+		return;
+	TreeNode *leftNode = root->left;
+	TreeNode *rightNode = root->right;
+	if(leftNode)
+	{
+		root->right = leftNode;
+		root->left = NULL;
+		TreeNode *rightmost = leftNode;
+		while(rightmost->right != NULL)
+			rightmost = rightmost->right;
+		rightmost->right = rightNode;
+	}
+	flatten(root->right);
+}

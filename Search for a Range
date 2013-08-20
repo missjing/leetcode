@@ -1,0 +1,45 @@
+problem：
+Given a sorted array of integers, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+------------------------------------------------------------------------
+solution：
+//二分查找的进阶版，当找左界时，A[mid] == target下，仍对左边继续二分；同理当找右界时，相等仍对右边二分
+int findIndex(int A[], int l, int r, int target, bool isLeft)
+{
+  if(l > r)
+		return -1;
+	int mid = (l + r) / 2;
+	if(A[mid] == target)
+	{
+		int pos = isLeft ? findIndex(A, l, mid - 1, target, isLeft) : findIndex(A, mid + 1, r, target, isLeft);
+		return pos == -1 ? mid : pos;
+	}
+	else if(A[mid] < target)
+		return findIndex(A, mid + 1, r, target, isLeft);
+	else
+		return findIndex(A, l, mid - 1, target, isLeft);
+}
+
+vector<int> searchRange(int A[], int n, int target)
+{
+  vector<int> ret(2, -1);
+	if(n <= 0)
+		return ret;
+	if(target <A[0] || target > A[n-1])
+		return ret;
+	bool isLeft = true;
+	int leftIndex = findIndex(A, 0, n-1, target, isLeft);
+	if(leftIndex == -1)
+		return ret;
+	int rightIndex = findIndex(A, 0, n -1, target, !isLeft);
+	ret[0] = leftIndex;
+	ret[1] = rightIndex;
+	return ret;
+}

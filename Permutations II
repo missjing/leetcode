@@ -1,0 +1,45 @@
+problem：
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1].
+------------------------------------------------
+solution：
+
+void dfs(int depth, int maxDepth, map<int, int> &checkTimes, vector<int> &tmp, vector<int> &num, vector<vector<int> > &ret)
+{
+  if(depth == maxDepth)
+	{
+		ret.push_back(tmp);
+		return;
+	}
+	map<int, int>::iterator it = checkTimes.begin();
+	while(it != checkTimes.end())
+	{
+		int t = it->first;
+		if(checkTimes[t])
+		{
+			checkTimes[t]--;
+			tmp.push_back(t);
+			dfs(depth + 1, maxDepth, checkTimes, tmp, num, ret);
+			tmp.pop_back();
+			checkTimes[t]++;
+		}
+		it++;
+	}
+}
+
+vector<vector<int> > permuteUnique(vector<int> &num)
+{
+	vector<vector<int> > ret;
+	if(num.size() == 0)
+		return ret;
+	sort(num.begin(), num.end());
+	map<int, int> checkTimes;
+	for(int i = 0; i < num.size(); i++)
+		checkTimes[num[i]]++;
+	vector<int> tmp;
+	dfs(0, num.size(), checkTimes, tmp, num, ret);
+	return ret;
+}

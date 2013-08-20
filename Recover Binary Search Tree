@@ -1,0 +1,61 @@
+problem:
+Two elements of a binary search tree (BST) are swapped by mistake.
+
+Recover the tree without changing its structure.
+
+Note:
+A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+
+---------------------------------------------------------------------------------------------------------
+solution:
+//思路一、O(n)空间的解法：中序遍历二叉树，对结点值排序
+void traverse(TreeNode* node, vector<int> &val, vector<TreeNode*> &index)
+{
+	if(node == NULL)
+		return;
+	traverse(node->left, val, index);
+	val.push_back(node->val);
+	index.push_back(node);
+	traverse(node->right, val, index);
+}
+
+ void recoverTree(TreeNode *root)
+ {
+	vector<int> val;
+	vector<TreeNode*> index;
+	traverse(root, val, index);
+	sort(val.begin(), val.end());
+	for(int i = 0; i < val.size(); ++i)
+		index[i]->val = val[i];
+ }
+
+
+ //思路二、O(1)空间的解法：仍旧是中序遍历二叉树，通过pre和root结点的辅助，记录first，second两个交换结点
+ void treeWalk(TreeNode* root, TreeNode* pre, TreeNode* first, TreeNode* second)
+ {
+	 if(root == NULL)
+		 return;
+	 treeWalk(root->left, pre, first, second);
+	 if(pre != NULL && (pre->val > root->val))
+	 {	
+		 if(first == NULL)
+			 first = pre; 
+		 second = root;
+	 }
+	 pre = root;
+	 treeWalk(root->right, pre, first, second);
+ }
+ 
+ void recoverTree(TreeNode *root)
+  {
+	  TreeNode* first = NULL;
+	  TreeNode* second = NULL;
+	  TreeNode* pre = NULL;
+	  treeWalk(root, pre, first, second);
+	  int tmp = first->val;
+	  first->val = second->val;
+	  second->val = tmp;
+  }
+
+

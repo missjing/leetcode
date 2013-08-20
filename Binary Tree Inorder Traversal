@@ -1,0 +1,74 @@
+problem:
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+
+   1
+    \
+     2
+    /
+   3
+return [1,3,2].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+
+--------------------------------------------------------------------------------------
+
+solution:
+考察树的中序遍历：左根右
+struct TreeNode {
+  int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+
+////////////递归版本
+void inorderTraversal_aux(TreeNode *node, vector<int> &ret)
+{
+	if(node)
+	{
+		if(node->left)
+			inorderTraversal_aux(node->left, ret);
+		ret.push_back(node->val);
+		if(node->right)
+			inorderTraversal_aux(node->right, ret);
+	}
+}
+
+vector<int> inorderTraversal(TreeNode *root)
+{
+	vector<int> ret;
+	ret.clear();
+	inorderTraversal_aux(root, ret);
+	return ret;
+}
+
+
+///////非递归版本
+vector<int> inorderTraversal(TreeNode *root)
+{
+	vector<int> ret;
+	stack<TreeNode*> s;
+	TreeNode *p = root;
+	while(!s.empty() || p != NULL)
+	{
+		if(p != NULL)
+		{
+			s.push(p);
+			p = p->left;
+		}
+		else
+		{
+			p = s.top();
+			s.pop();
+			ret.push_back(p->val);
+			p = p->right;
+		}
+	}
+	return ret;
+}

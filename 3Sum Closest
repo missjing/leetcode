@@ -1,0 +1,44 @@
+problem：
+Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+    For example, given array S = {-1 2 1 -4}, and target = 1.
+
+    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+--------------------------------------------------------------------
+solution：
+思路一、延续3sum思想的话，排序后先两重循环定a 和b，再二分将target-a-b插入到恰当的位置
+
+思路二、第一个数按照原来的从前往后走，后面两个数一前一后相向而行，最差的情况
+只是走完剩下的那一段一遍，所以整体来说时间复杂度是O(n2)
+
+////////////////////////////////////////////////
+int threeSumClosest(vector<int> &num, int target)
+{
+  	if(num.size() < 3)
+			return 0;
+		sort(num.begin(), num.end());
+		int mindif = abs(num[0] + num[1] + num[2] - target);
+		int sumret = num[0] + num[1] + num[2];
+		for(int i = 0; i < num.size() - 2; i++)
+		{
+			int l = i + 1;
+			int r = num.size() - 1;
+			int a = num[i];
+			while(l < r)   //这里不能等于，因为每个元素只能取一次
+			{
+				int sum = a + num[l] + num[r];
+				if(abs(sum - target) < mindif)
+				{
+					mindif = abs(sum - target);
+					sumret = sum;
+				}
+				if(sum == target)
+					return sumret;
+				else if(sum > target)
+					r--;
+				else
+					l++;
+			}
+		}
+	return sumret;
+}

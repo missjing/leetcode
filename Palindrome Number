@@ -1,0 +1,24 @@
+problem：
+Determine whether an integer is a palindrome. Do this without extra space.
+
+solution：
+//注意不能使用额外空间
+//逆序得到的值 == 原值，则为回文。负数不可能是回文
+bool isPalindrome(int x)
+{
+  if(x < 0)
+		return false;
+	int n = x;
+	int dig;
+	int rev = 0;
+	while(n)
+	{
+		dig = n % 10;
+		rev = rev * 10 + dig;
+		n = n / 10;
+	}
+	if(rev == x)
+		return true;
+	else
+		return false;
+}

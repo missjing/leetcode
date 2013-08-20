@@ -1,0 +1,31 @@
+problem：
+Given an unsorted integer array, find the first missing positive integer.
+
+For example,
+Given [1,2,0] return 3,
+and [3,4,-1,1] return 2.
+
+Your algorithm should run in O(n) time and uses constant space.
+---------------------------------------------------------------
+solution：
+//虽然不能另外开辟非常数级的额外空间，但是可以在输入数组上就地进行swap
+//交换数组元素，使得数组中第i位存放数值i+1，然后遍历数组，寻找第一个不符合此要求的元素
+//要注意的是，我们是找第一个没出现的正整数，因此只调整[1,n]范围内数的位置，对于<=0的数不予处理
+int firstMissingPositive(int A[], int n)
+{
+  int i = 0;
+	while(i < n) 
+	{
+		//每次把A[i]放到正确的位置，还需将A[A[i] - 1]放到正确的位置，所以交换的时候i值不变
+		if(A[i] != i + 1 && A[i] >= 1 && A[i] <= n && A[i] != A[A[i] - 1])
+			swap(A[i], A[A[i] - 1]);
+		else 
+			i++;
+	}
+	for(i = 0; i < n; i++)
+	{
+		if(A[i] != i+1)
+			return i+1;
+	}
+	return n+1;
+}

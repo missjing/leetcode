@@ -1,0 +1,59 @@
+problem：
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+For example,
+S = "ADOBECODEBANC"
+T = "ABC"
+
+Minimum window is "BANC".
+
+Note:
+If there is no such window in S that covers all characters in T, return the emtpy string "".
+
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+
+--------------------------------------------------------------------------------------
+
+solution:
+//字符哈希+双指针
+//尾指针不断往后扫，当扫到有一个窗口包含了所有T的字符，然后再收缩头指针，直到不能再收缩为止。
+//最后记录所有可能的情况中窗口最小的
+string minWindow(string S, string T)
+{
+  int nS = S.size();
+	int nT = T.size();
+	if(nS == 0 || nT == 0)
+		return "";
+	int needToFind[256] = {0};
+	int hasFound[256] = {0};
+	int minBegin, minEnd;
+	int minWindow = nS + 1;
+	int count = 0;
+	for(int i = 0; i < nT; ++i)
+		needToFind[T[i]]++;
+	int begin = 0, end = 0;
+	for(; end < nS; ++end)
+	{
+		char ch = S[end];
+		hasFound[ch]++;
+		if(hasFound[ch] <= needToFind[ch])
+			count++;
+		if(count == nT)
+		{
+			while(needToFind[S[begin]] == 0 || hasFound[S[begin]] > needToFind[S[begin]])
+			{
+				if(hasFound[S[begin]] > needToFind[S[begin]])
+					hasFound[S[begin]]--;
+				begin++;
+			}
+			int length = end - begin + 1;
+			if(length < minWindow)
+			{
+				minBegin = begin;
+				minEnd = end;
+				minWindow = length;
+			}
+		}
+	}
+	return minWindow <= nS ? S.substr(minBegin, minWindow) : "";
+}
