@@ -1,3 +1,25 @@
+problem：
+Given a collection of integers that might contain duplicates, S, return all possible subsets.
+
+Note:
+
+Elements in a subset must be in non-descending order.
+The solution set must not contain duplicate subsets.
+For example,
+If S = [1,2,2], a solution is:
+
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+-------------------------------------------------------------
+
+solution：
 //比上题写得更简洁了，简化了深搜过程中传递的变量值
 void subsetsWithDup_aux(vector<int> &S, int curPos, vector<int> &tmp, vector<vector<int> > &ret)
 {
