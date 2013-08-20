@@ -1,4 +1,10 @@
-//DP。用f[i][j]来记录i行j列为结尾，往前连续的1的个数。
+problem:
+Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
+
+--------------------------------------------------------------------------
+
+solution:
+//DP。用f[i][j]来记录以i行j列为结尾，在当前行j列往前连续的1的个数。
 //然后再一个O(n^3)的循环来找以(i, j)为右下角的矩形最大的1的面积。
 int maximalRectangle(vector<vector<char> > &matrix)
 {
@@ -18,7 +24,7 @@ int maximalRectangle(vector<vector<char> > &matrix)
 	for(int i = 0; i < m; ++i)
 		for(int j = 0; j < n; ++j)
 		{
-			int k = i;
+			int k = i; //k控制以[i,j]为右下角矩形的高
 			int width = INT_MAX;
 			while(k >= 0)
 			{
