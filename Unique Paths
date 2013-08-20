@@ -1,3 +1,14 @@
+problem:
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+How many possible unique paths are there?
+
+Note: m and n will be at most 100.
+
+--------------------------------------------------------
+solution:
 //解法一：回溯法(小集合通过，大集合超时)
 int backtrack(int r, int c, int m, int n)
 {
@@ -15,7 +26,7 @@ int uniquePaths(int m, int n)
 
 
 //解法二、DP(from bottom to up)
-//dp[m][n] = dp[m][n-1] + dp[m-1][n] where dp[m][n] denotes the number of unique paths
+//动态规划状态转移方程：dp[m][n] = dp[m][n-1] + dp[m-1][n]，其中dp[m][n]表示到达网格[m][n]时有多少条唯一的路径
 int uniquePaths(int m, int n)
 {
 	if(m == 0 || n == 0)
