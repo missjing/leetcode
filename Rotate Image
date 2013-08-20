@@ -7,7 +7,7 @@ Follow up:
 Could you do this in-place?
 ----------------------------------------------
 solution：
-//寻找规律的矩阵操作
+//寻找矩阵中元素位置变化的规律。从外层到里层，每一层每四个进行交换
 void rotate(vector<vector<int> > &matrix)
 {
   int height = matrix.size();
