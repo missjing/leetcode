@@ -1,3 +1,28 @@
+problem:
+Given a set of distinct integers, S, return all possible subsets.
+
+Note:
+
+Elements in a subset must be in non-descending order.
+The solution set must not contain duplicate subsets.
+For example,
+If S = [1,2,3], a solution is:
+
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+----------------------------------------------------------------
+
+solution:
+排列组合中的排列问题。
 //这题是(n,k)问题的延伸，也就是从n个元素集合中选取k个元素，有多少种不同的选法。只要把k从0循环到n即可。
 //对于(n, k)问题，不停地选取集合n中的元素，直到个数为k，然后开始回溯，去掉k中的第一个元素，再纳入n中的下一个元素，依次类推不断回溯，直到遍历所有的可能性。
 void subsets_aux(vector<vector<int> > &ret, vector<int> &tmp, vector<int> &S,  int n, int k, int index)
