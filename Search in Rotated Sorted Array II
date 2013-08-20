@@ -1,3 +1,14 @@
+problem:
+Follow up for "Search in Rotated Sorted Array":
+What if duplicates are allowed?
+
+Would this affect the run-time complexity? How and why?
+
+Write a function to determine if a given target is in the array.
+
+----------------------------------------------------------------
+
+solution:
 //当有重复的元素时，比如数组{1, 0, 1, 1, 1}和{1, 1, 1, 0, 1}这两个数组中，第一个数字、最后一个数字和中间一个数字都是1，
 //我们无法确定中间的数字1属于第一个递增子数组还是属于第二个递增子数组。这个时候只能用顺序查找
 bool search(int A[], int n, int target)
@@ -28,33 +39,8 @@ bool search(int A[], int n, int target)
 		}
 		else 
 		{
-				r++;
+				r--;
 		}
 	}
 	return false;
 }
-
-
-//void writeBinaryTree(BinaryTree *p, ostream &out)  //BinaryTree是二叉树结构体，typedef struct node BinaryTree.  
-//{  
-//	if (!p) {  
-//		out << "# ";  
-//	} else {  
-//		out << p->data << " ";  
-//		writeBinaryTree(p->left, out);  
-//		writeBinaryTree(p->right, out);  
-//	}  
-//}  
-//
-//void readBinaryTree(BinaryTree *&p, ifstream &fin)   
-//{  
-//	int token;  
-//	bool isNumber;  
-//	if (!readNextToken(token, fin, isNumber)) //readNextToken读取文件下一个值，如果是数字返回true，否则返回false  
-//		return;  
-//	if (isNumber) {  
-//		p = new ListNode(token);       
-//		readBinaryTree(p->left, fin);  
-//		readBinaryTree(p->right, fin);  
-//	}  
-//}  
