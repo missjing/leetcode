@@ -1,0 +1,42 @@
+problem:
+Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+return 1->4->3->2->5->NULL.
+
+Note:
+Given m, n satisfy the following condition:
+1 <= m <= n <= length of list.
+
+--------------------------------------------------------
+
+solution:
+翻转过程一般需要三个结点指针：尾结点subTail（初始为待翻转序列的头结点，一步步翻转后最后成为新序列的尾结点）、
+待翻转结点pCur（其实就是尾结点的next结点）、头结点（每次翻转都需要更新）
+///////////////////////////
+struct ListNode {
+  int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode *reverseBetween(ListNode *head, int m, int n)
+{
+	if(head == NULL)
+		return NULL;
+	ListNode **pNode = &head;
+	for(int i = 1; i < m; ++i)
+		pNode = &((*pNode)->next);
+	ListNode *subTail = *pNode;
+	for(int i = m + 1; i <= n; ++i)
+	{
+		ListNode *pCur = subTail->next;
+		subTail->next = pCur->next;
+		pCur->next = *pNode;
+		*pNode = pCur;
+	}
+	pNode = &(subTail->next);
+	return head;
+}
