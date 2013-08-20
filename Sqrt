@@ -1,19 +1,26 @@
+problem:
+Implement int sqrt(int x).
 
-////牛顿法（最速下降法）
+Compute and return the square root of x.
+
+-------------------------------------------
+
+solution:
+思路一、牛顿法（最速下降法）newtown t1 = t0 - f(t0) / f'(t0);
 ////代码中的20次迭代是经验值。如果输入是int，这个值够了。
-//int sqrt(int x) {
-//  if(x <= 1) return x;
-//	double tpre = x;
-//	double t = tpre;
-//	for(int i = 0 ; i < 20; ++i) {
-//		//newtown t1 = t0 - f(t0) / f'(t0);
-//		t = (tpre * tpre + x) * 0.5 / tpre;
-//		tpre = t;
-//	}
-//	return floor(t);
-//}
+int sqrt(int x) {
+  if(x <= 1) return x;
+	double tpre = x;
+	double t = tpre;
+	for(int i = 0 ; i < 20; ++i) {
+		t = (tpre * tpre + x) * 0.5 / tpre;
+		tpre = t;
+	}
+	return floor(t);
+}
 
-//二分搜索法：对于一个非负数n，它的平方根不会大于（n/2 + 1）
+
+思路二、二分搜索法：对于一个非负数n，它的平方根不会大于（n/2 + 1）
 int sqrt(int x)
 {
 	long long i = 0;
