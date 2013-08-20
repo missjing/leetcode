@@ -1,3 +1,15 @@
+problem:
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+For example,
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.
+
+----------------------------------------------------------
+
+solution:
+当前指针用来遍历链表，记录当前指针的pre指针以方便删除
+///////////////////////////////////
 struct ListNode {
   int val;
 	ListNode *next;
