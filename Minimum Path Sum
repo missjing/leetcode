@@ -1,3 +1,11 @@
+problem:
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+
+Note: You can only move either down or right at any point in time.
+
+-------------------------------------------------------------------
+
+solution:
 //动态规划实现
 //对每个点，到这个点的路径要么从上方要么从左方
 //特殊的，对于[0][j]的点只考虑从左方来，[i][0]的点只考虑从上方来
