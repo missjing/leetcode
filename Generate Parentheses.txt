@@ -1,0 +1,31 @@
+problem:
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+"((()))", "(()())", "(())()", "()(())", "()()()"
+----------------------------------------------------
+solution:
+//一、生成合法的括号对：1）左右括号相等 2）任一位置之前的右括号数不大于左括号数
+//二、当拿到合法串长度为k，要继续添加时：1）如果左括号小于n，则添加左括号；同时若右括号
+//小于左括号数，也可在k串上添加一个右括号 2）如果左括号数等于n，则添加缺少的右括号数，完成。
+void generator(vector<string> & ret, string s, int l, int r, int n)
+{
+  if(l == n)
+	{
+		s.append(n - r, ')');
+		ret.push_back(s);
+		return;
+	}
+	generator(ret, s + '(', l + 1, r, n);
+	if(l > r)
+		generator(ret, s + ')', l, r + 1, n);
+}
+vector<string> generateParenthesis(int n)
+{
+	vector<string> ret;
+	if(n <= 0)
+		return ret;
+	generator(ret, "", 0, 0, n);
+	return ret;
+}

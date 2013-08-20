@@ -1,0 +1,42 @@
+problem：
+Given a linked list, remove the nth node from the end of list and return its head.
+
+For example,
+
+   Given linked list: 1->2->3->4->5, and n = 2.
+
+   After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+Given n will always be valid.
+Try to do this in one pass.
+---------------------------------------------------------------------------------
+solution：
+//快慢指针的使用，重点在于特殊情况和边界条件。遍历到链表尾后，删除较慢结点，因而在遍历过程要记录下慢结点的pre结点
+//如果删除的是头结点、尾结点(此题归纳到else情况下)，或普通结点分别的什么情况
+ListNode *removeNthFromEnd(ListNode *head, int n)
+{
+  if(head == NULL)
+		return NULL;
+	ListNode *slow, *fast, *pre;
+	slow = fast = head;
+	pre = NULL;
+	for(int i = 0; i < n-1; i++)
+			fast = fast->next;
+	while(fast->next != NULL)
+	{
+		pre = slow;
+		slow = slow->next;
+		fast = fast->next;
+	}
+	if(pre == NULL)  //删除的是头结点时
+	{
+		head = slow->next;
+	}
+	else   //删除的是其他节点时，尾节点情况包含进来了
+	{
+		pre->next = slow->next;
+	}
+	delete slow;
+	slow = NULL;
+	return head;
+}

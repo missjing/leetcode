@@ -1,0 +1,42 @@
+problem:
+Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.
+
+solution:
+方法一，Time：O(n2)
+从s[i]开始(i:0~n)，如果没有出现过，则长度加1，如果出现过就记录当前得到的最长子串长度,并更新全局maxlen；接着从i+1开始重复前面的过程，直到把字符串遍历完。
+
+
+方法二，Time:O(n)+哈希空间
+假设从s[i]开始并且在s[j]处出现一个重复字符，此时求len=j-i，那么我们其实不需要从s[i+1]开始重新扫描。假设在范围[i,j-1]中跟s[j]重复的字符在位置X上，则从[i,X]开始求得的非重复子字符串都不会比len长(因为都会在位置j结束)，因此就从s[X+1]开始查找，
+tips：要弄清string里包含的字符范围，如果只有'a'~'z'，则只需26大小的size；如果是ASCII，则包含256个size。
+      substring表明是要求的连续子串，这要当做常识。
+      遇到出现过的字符时，将子串中上一次出现该字符位置前面的字符全部截断，并更新子串长度
+
+int lengthOfLongestSubstring(string s)
+{
+    bool exist[256] = {false};
+	int i = 0, j = 0;
+	int maxlen = 0;
+	int n = s.length();
+	while(j < n)
+	{
+		if(exist[s[j]])
+		{
+			maxlen = max(maxlen, j-i);
+			while(s[i] != s[j])
+			{
+				exist[s[i]] = false;
+				i++;
+			}
+			i++;
+			j++;
+		}
+		else
+		{
+			exist[s[j]] = true;
+			j++;
+		}
+	}
+	maxlen = max(maxlen, n-i);//千万别丢了这步
+	return maxlen;
+}

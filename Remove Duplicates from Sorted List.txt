@@ -1,0 +1,42 @@
+problem:
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+For example,
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.
+
+----------------------------------------------------------
+
+solution:
+当前指针用来遍历链表，记录当前指针的pre指针以方便删除
+///////////////////////////////////
+struct ListNode {
+  int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode *deleteDuplicates(ListNode *head)
+{
+	if(head == NULL)
+		return NULL;
+	ListNode *pPre = head;
+	ListNode *pCur = pPre->next;
+	ListNode *del = NULL;
+	while(pCur)
+	{
+		if(pCur->val == pPre->val)
+		{
+			del = pCur;
+			pPre->next = pCur->next;
+			pCur = pCur->next;
+			delete del;
+		}
+		else
+		{
+			pCur = pCur->next;
+			pPre = pPre->next;
+		}	
+	}
+	return head;
+}
