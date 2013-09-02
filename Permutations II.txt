@@ -7,39 +7,32 @@ For example,
 ------------------------------------------------
 solution：
 
-void dfs(int depth, int maxDepth, map<int, int> &checkTimes, vector<int> &tmp, vector<int> &num, vector<vector<int> > &ret)
+void permuteUnique_aux(int index, vector<int>&num, vector<int>&tmp, vector<vector<int> >&ret, vector<bool>&isVisited)
 {
-  if(depth == maxDepth)
-	{
-		ret.push_back(tmp);
-		return;
-	}
-	map<int, int>::iterator it = checkTimes.begin();
-	while(it != checkTimes.end())
-	{
-		int t = it->first;
-		if(checkTimes[t])
-		{
-			checkTimes[t]--;
-			tmp.push_back(t);
-			dfs(depth + 1, maxDepth, checkTimes, tmp, num, ret);
-			tmp.pop_back();
-			checkTimes[t]++;
-		}
-		it++;
-	}
+    if(index == num.size())
+    {
+        ret.push_back(tmp);
+        return;
+    }
+    for(int i = 0; i < num.size(); ++i)
+    {
+        if(isVisited[i] || (i != 0 && num[i] == num[i - 1] && isVisited[i - 1]))continue;
+        isVisited[i] = true;
+        tmp.push_back(num[i]);
+        permuteUnique_aux(index + 1, num, tmp, ret, isVisited);
+        isVisited[i] = false;
+        tmp.pop_back();
+    }
 }
-
+ 
 vector<vector<int> > permuteUnique(vector<int> &num)
 {
-	vector<vector<int> > ret;
-	if(num.size() == 0)
-		return ret;
-	sort(num.begin(), num.end());
-	map<int, int> checkTimes;
-	for(int i = 0; i < num.size(); i++)
-		checkTimes[num[i]]++;
-	vector<int> tmp;
-	dfs(0, num.size(), checkTimes, tmp, num, ret);
-	return ret;
+    vector<vector<int> > ret;
+    if(num.size() == 0)
+        return ret;
+    sort(num.begin(), num.end());
+    vector<bool> isVisited(num.size(), false);
+    vector<int> tmp;
+    permuteUnique_aux(0, num, tmp, ret, isVisited);
+    return ret;
 }
