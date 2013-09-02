@@ -23,37 +23,58 @@ If S = [1,2,3], a solution is:
 
 solution:
 排列组合中的排列问题。
-//这题是(n,k)问题的延伸，也就是从n个元素集合中选取k个元素，有多少种不同的选法。只要把k从0循环到n即可。
-//对于(n, k)问题，不停地选取集合n中的元素，直到个数为k，然后开始回溯，去掉k中的第一个元素，再纳入n中的下一个元素，依次类推不断回溯，直到遍历所有的可能性。
-void subsets_aux(vector<vector<int> > &ret, vector<int> &tmp, vector<int> &S,  int n, int k, int index)
-{
-  if(k == 0)
-	{
-		if(find(ret.begin(), ret.end(), tmp) == ret.end())
-			ret.push_back(tmp);
-	}
-	else if(k > 0 && index < n)
-	{
-		tmp.push_back(S[index]);
-		subsets_aux(ret, tmp, S, n, k - 1, index + 1);
-
-		tmp.pop_back();
-		subsets_aux(ret, tmp, S, n, k, index + 1);
-	}
-}
-
+//思路一、二进制法。题目要求结果组合中数字按升序排列，因此刚开始需对数组排序。
 vector<vector<int> > subsets(vector<int> &S)
 {
-	sort(S.begin(), S.end());
-	int n = S.size();
-	vector<vector<int> > ret;
-	vector<int> tmp;
-	if(n == 0)
-	{
-		ret.push_back(tmp);
-		return ret;
-	}
-	for(int i = 0; i <= n; ++i)
-		subsets_aux(ret, tmp, S, n, i, 0);
-	return ret;
+    vector<vector<int> > ret;
+    int n = S.size();
+    if(n == 0)
+        return ret;
+    sort(S.begin(), S.end());
+    int maxNum = 1 << n;
+    for(int i = 0; i < maxNum; ++i)
+    {
+        vector<int> subset;
+        int idx = 0;
+        int j = i;
+        while(j > 0)
+        {
+            if(j & 1)
+                subset.push_back(S[idx]);
+            j = j >> 1;
+            ++idx;
+        }
+        ret.push_back(subset);
+    }
+    return ret;
+}
+ 
+//思路二、标志位法。题目要求结果组合中数字按升序排列，因此刚开始需对数组排序。
+void subsets_aux(int idx, vector<int> &S, vector<vector<int> > &ret, vector<bool> &isVisited)
+{
+    if(idx == S.size())
+    {
+        vector<int> tmp;
+        for(int i = 0; i < S.size(); ++i)
+        {
+            if(isVisited[i])
+                tmp.push_back(S[i]);
+        }
+        ret.push_back(tmp);
+        return;
+    }
+    isVisited[idx] = true;
+    subsets_aux(idx + 1, S, ret, isVisited);
+    isVisited[idx] = false;
+    subsets_aux(idx + 1, S, ret, isVisited);
+}
+vector<vector<int> > subsets(vector<int> &S)
+{
+    vector<vector<int> > ret;
+    if(S.size() == 0)
+        return ret;
+    sort(S.begin(), S.end());
+    vector<bool> isVisited(S.size(), false);
+    subsets_aux(0, S, ret, isVisited);
+    return ret;
 }
