@@ -1,0 +1,26 @@
+Given an array of strings, return all groups of strings that are anagrams.
+
+Note: All inputs will be in lower-case.
+
+---------------------------------------------
+
+vector<string> anagrams(vector<string> &strs)
+{
+	vector<string> ret;
+	map<string, vector<string> > dict;
+	vector<string>::iterator iter;
+	for(iter = strs.begin(); iter != strs.end(); ++iter)
+	{
+		string tmp = *iter;
+		sort(tmp.begin(), tmp.end());
+		dict[tmp].push_back(*iter);
+	}
+	map<string, vector<string> >::iterator it;
+	for(it = dict.begin(); it != dict.end(); ++it)
+	{
+		if(it->second.size() > 1)
+			for(iter = it->second.begin(); iter != it->second.end(); ++iter)
+				ret.push_back(*iter);
+	}
+	return ret;
+}
