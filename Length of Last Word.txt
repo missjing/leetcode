@@ -1,0 +1,32 @@
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+For example, 
+Given s = "Hello World",
+return 5.
+
+----------------------------------------------------------
+
+//这道题的关键在于理解“最后一个单词”，如对于字符串"a  "，最后一个单词为"a"(也就是最后面的空格会自动忽略)
+//此外这里假设输入的对题目有效的，所以没有对字符进行有效性验证
+ int lengthOfLastWord(const char *s)
+ {
+	if(s == NULL)
+		return 0;
+	int len = strlen(s);
+	int count = 0;
+	int i = len - 1;
+	while(i >= 0 && s[i] == ' ')
+		--i;
+	if(i == -1)
+		return 0;
+	while(i >= 0 && s[i] != ' ')
+	{
+		++count;
+		--i;
+	}
+	return count;
+ }
