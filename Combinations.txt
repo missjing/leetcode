@@ -1,0 +1,40 @@
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+For example,
+If n = 4 and k = 2, a solution is:
+
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+--------------------------------------------------------------------------------
+void combine_aux(int idx, int n, int k, vector<int> &tmp, vector<vector<int> > &ret)
+{
+	if(k == 0)
+	{
+		ret.push_back(tmp);
+		return;
+	}
+	else if(k > 0 && idx <= n)
+	{
+		tmp.push_back(idx);
+		combine_aux(idx + 1, n, k - 1, tmp, ret);
+		tmp.pop_back();
+		combine_aux(idx + 1, n, k, tmp, ret);
+	}
+}
+
+vector<vector<int> > combine(int n, int k)
+ {
+	vector<vector<int> > ret;
+	if(n == 0 || k == 0)
+		return ret;
+	vector<int> tmp;
+	combine_aux(1, n, k, tmp, ret);
+	return ret;
+ }
