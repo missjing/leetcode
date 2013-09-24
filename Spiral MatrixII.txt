@@ -1,0 +1,45 @@
+Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+
+For example,
+Given n = 3,
+
+You should return the following matrix:
+[
+ [ 1, 2, 3 ],
+ [ 8, 9, 4 ],
+ [ 7, 6, 5 ]
+]
+
+--------------------------------------------------
+
+ vector<vector<int> > generateMatrix(int n)
+ {
+	vector<vector<int> > matrix(n, vector<int>(n));
+	if(n == 0)
+		return matrix;
+	int left = 0, right = n - 1;
+	int up = 0, down = n - 1;
+	int num = 1;
+	while(true)
+	{
+		//from left to right
+		for(int i = left; i <= right; ++i)
+			matrix[left][i] = num++;
+		if(++up > down)return matrix;
+
+		//from up to down
+		for(int i = up; i <= down; ++i)
+			matrix[i][right] = num++;
+		if(left > -- right)return matrix;
+
+		//from right to left
+		for(int i = right; i >= left; --i)
+			matrix[down][i] = num++;
+		if(up > -- down)return matrix;
+
+		//from down to up
+		for(int i = down; i >= up; --i)
+			matrix[i][left] = num++;
+			if(++left > right)return matrix;
+	}
+ }
