@@ -1,0 +1,63 @@
+The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+
+
+
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
+
+For example,
+There exist two distinct solutions to the 4-queens puzzle:
+
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+-------------------------------------------------------------
+bool check(int row, int *place)
+{
+	for(int i = 0; i < row; ++i)
+	{
+		int diff = abs(place[i] - place[row]);
+		if(diff == 0 || diff == row - i)
+			return false;
+	}
+	return true;
+}
+
+void placeQueens(int row, int n, int *place, vector<vector<string> > &ret)
+{
+	if(row == n)
+	{
+		vector<string> tmp;
+		for(int i = 0; i < row; ++i)
+		{
+			string s(n, '.');
+			s[place[i]] = 'Q';
+			tmp.push_back(s);
+		}
+		ret.push_back(tmp);
+		return;
+	}
+	for(int i = 0; i < n; ++i)
+	{
+		place[row] = i;
+		if(check(row, place))
+			placeQueens(row + 1, n, place, ret);
+	}
+}
+
+vector<vector<string> > solveNQueens(int n)
+{
+	vector<vector<string> > ret;
+	int *place = new int[n];
+	placeQueens(0, n, place, ret);
+	return ret;
+}
