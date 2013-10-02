@@ -58,3 +58,51 @@ vector<vector<int> > threeSum(vector<int> &num)
 	ret.erase(unique(ret.begin(), ret.end()), ret.end());
 	return ret;
 }
+
+////////////////
+思路二：如同2sum一样的思路，一层循环遍历一个数，然后前后两个指针相对而行
+重点！！两个地方都对有重复元素时进行优化
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        if(num.size() == 0)
+            return ret;
+        vector<int> sub;
+        sort(num.begin(), num.end());
+        for(int i = 0; i < num.size() - 1; ++i)
+        {
+            int p = i + 1;
+            int q = num.size() - 1;
+            int a = num[i];
+            while(p < q)
+            {
+                int b = num[p];
+                int c = num[q];
+                if(a + b + c == 0)
+                    {
+                        sub.clear();
+                        sub.push_back(a);
+                        sub.push_back(b);
+                        sub.push_back(c);
+                        ret.push_back(sub);
+                        p++;
+                        q--;
+                        while(p < q && num[p] == num[p - 1])p++;  //a + b + c = 0中对b重复时的优化
+                        while(p < q && num[q] == num[q + 1])q--; //a + b + c = 0中对c重复时的优化
+                    }
+                else if(a + b + c > 0)
+                    q--;
+                else
+                    p++;
+            }
+            if(i < num.size() - 1) //a + b + c = 0中对a重复时的优化
+            {
+                while(num[i + 1] == num[i])i++;
+            }
+        }
+        return ret;
+    }
+};
