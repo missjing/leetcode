@@ -37,3 +37,38 @@ vector<Interval> merge(vector<Interval> &intervals)
 	}
 	return ret;
  }
+ 
+ 
+ /////////////////////
+ ///重写与2013-10-2
+ int compare(const Interval &a, const Interval &b)
+{
+	if(a.start == b.start)
+		return a.end < b.end;
+	else
+		return a.start < b.start;
+}
+
+vector<Interval> merge(vector<Interval> &intervals) {
+	// Start typing your C/C++ solution below
+	// DO NOT write int main() function
+	vector<Interval> ret;
+	if(intervals.size() == 0)
+		return ret;
+	sort(intervals.begin(), intervals.end(), compare);
+	int curmin, curmax;
+	int i = 0;
+	while(i < intervals.size())
+	{
+		curmin = intervals[i].start;
+		curmax = intervals[i].end;
+		while(i < intervals.size() - 1 && intervals[i+1].start <= curmax)
+		{
+				curmax = intervals[i + 1].end;
+				i++;
+		}
+		ret.push_back(Interval(curmin, curmax));
+		 i++;
+	}
+	return ret;
+}
