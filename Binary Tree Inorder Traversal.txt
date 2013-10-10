@@ -57,12 +57,12 @@ vector<int> inorderTraversal(TreeNode *root)
 	TreeNode *p = root;
 	while(!s.empty() || p != NULL)
 	{
-		if(p != NULL)
+		while(p != NULL)
 		{
 			s.push(p);
 			p = p->left;
 		}
-		else
+		if(!p.empty())
 		{
 			p = s.top();
 			s.pop();
