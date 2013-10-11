@@ -1,0 +1,50 @@
+Given a binary tree, find the maximum path sum.
+
+The path may start and end at any node in the tree.
+
+For example:
+Given the below binary tree,
+
+       1
+      / \
+     2   3
+Return 6.
+
+---------------------------------------------
+注意点：
+1、结点值可能为负，所以对于返回的单条路径值sum是比较根节点值与根节点和max(l,r)得到的
+2、每次的返回值是sum，而不是res。sum表示可贡献的单条路径的最大值
+3、最终求得的res为最大左子树路径+最大右子树路径+根节点值
+4、res传参时使用的引用
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int maxPathSum_aux(TreeNode *root, int &res)
+    {
+        if(root == NULL)
+            return 0;
+        int l = maxPathSum_aux(root->left, res);
+        int r = maxPathSum_aux(root->right, res);
+        int sum = max(root->val, max(l, r) + root->val);
+        res = max(res, sum);
+        res = max(res, root->val + l + r);
+        return sum;
+    }
+
+    int maxPathSum(TreeNode *root) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        if(root == NULL)
+            return 0;
+        int res = INT_MIN;
+        maxPathSum_aux(root, res);
+        return res;
+    }
+};
