@@ -13,7 +13,9 @@ solution：
 //要注意的是，我们是找第一个没出现的正整数，因此只调整[1,n]范围内数的位置，对于<=0的数不予处理
 int firstMissingPositive(int A[], int n)
 {
-  int i = 0;
+        if(n == 0)
+            return 1; //数组为空时，丢失的第一个正整数是1.
+  	int i = 0;
 	while(i < n) 
 	{
 		//每次把A[i]放到正确的位置，还需将A[A[i] - 1]放到正确的位置，所以交换的时候i值不变
