@@ -1,0 +1,33 @@
+There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+
+Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+
+Note:
+The solution is guaranteed to be unique.
+----------------------------------------------------
+思路：第一反应是以每个gas为起点进行遍历，注意第二层循环的数组index取(i+index)%len。复杂度为O(n2)
+更好的O(n)解法：建立两个变量sum和total，从0到len遍历gas[]和cost[]，sum和total都等于gas[i]-cost[i]，检测sum是否小于0，
+如果是，res变量等于当前index，同时sum归零。最终根据total变量是否大于零决定返回res或者-1。
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        int sum = 0;
+        int total = 0;
+        int idx = -1;
+        for(int i = 0; i < gas.size(); ++i)
+        {
+            sum += gas[i] - cost[i];
+            total += gas[i] - cost[i];
+            if(sum < 0)
+            {
+                idx = i;
+                sum = 0;
+            }
+        }
+        return total >= 0 ? idx + 1 : -1;
+    }
+};
