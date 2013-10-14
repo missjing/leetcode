@@ -20,7 +20,7 @@ string longestCommonPrefix(vector<string> &strs)
 	int nLength = 10000;
 	string s_prefix = "";
 	for(int i = 0; i < strs.size(); i++)
-		nLength = min(nLength, (int)strs[i].length());
+		nLength = min(nLength, (int)strs[i].length()); //string长度值类型是size_type，所以这里一定要转为int
 	for(int j = 0; j < nLength; j++)
 		if(isCommon(strs, j))
 			s_prefix.append(1, strs[0][j]);
